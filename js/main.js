@@ -3,15 +3,14 @@
 
     // Spinner
     var spinner = function () {
-        setTimeout(function () {
-            if ($('#spinner').length > 0) {
-                $('#spinner').removeClass('show');
-            }
-        }, 1);
+        window.onload = function() {
+            // Hide the spinner when the entire page is loaded
+            $('#spinner').removeClass('show');
+        };
     };
     spinner();
 
-    // Initiate the wowjs
+    // Initiate the wowjs (if applicable)
     new WOW().init();
 
     // Sticky Navbar
@@ -59,6 +58,7 @@ function loadComponent(id, file, callback) {
         .then(data => {
             document.getElementById(id).innerHTML = data;
             if (callback) callback(); // run optional callback
+            $('#spinner').removeClass('show'); // Hide the spinner once content is loaded
         })
         .catch(err => console.error(`Error loading ${file}:`, err));
 }
@@ -97,69 +97,3 @@ document.addEventListener("DOMContentLoaded", function () {
     loadComponent("footer-container", "_footer.html");
 
 });
-
-
-
-//******************** Get a Quote Form Validation & Submit *********************/
-document.getElementById('quoteForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission behavior
-
-    // Client-Side Validation
-    let isValid = true;
-
-    // Check if Name is filled
-    if (document.getElementById('gname').value.trim() === '') {
-        alert('Please provide your name.');
-        isValid = false;
-    }
-
-    // Check if Email is valid
-    let email = document.getElementById('gmail').value.trim();
-    if (!email || !validateEmail(email)) {
-        alert('Please provide a valid email.');
-        isValid = false;
-    }
-
-    // Check if Mobile is filled
-    if (document.getElementById('cname').value.trim() === '') {
-        alert('Please provide your mobile number.');
-        isValid = false;
-    }
-
-    // Check if Service Type is selected
-    if (document.getElementById('service').value === '') {
-        alert('Please select a service.');
-        isValid = false;
-    }
-
-    if (!isValid) {
-        return; // Stop the form submission if validation fails
-    }
-
-    // Prepare form data
-    let formData = new FormData(this);
-
-    // Submit form data using Fetch API
-    fetch('https://formsubmit.co/homnextinc@gmail.com', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        if (response.ok) {
-            document.getElementById('successMessage').classList.remove('d-none');
-            document.getElementById('quoteForm').reset(); // Reset form
-        } else {
-            throw new Error('Submission failed');
-        }
-    })
-    .catch(error => {
-        document.getElementById('errorMessage').classList.remove('d-none');
-    });
-});
-
-// Email validation function
-function validateEmail(email) {
-    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return re.test(String(email).toLowerCase());
-}
-//******************** End of Get a Quote Form Validation & Submit *********************/
