@@ -73,7 +73,7 @@ function setActiveNavLink() {
         if (
             currentPath === href ||
             (currentPath === "/" && href === "/index.html") ||
-            (currentPath.startsWith("/Services/") && href === "/service.html")
+            (currentPath.startsWith("/services/") && href === "/service.html")
         ) {
             link.classList.add('active');
         }
