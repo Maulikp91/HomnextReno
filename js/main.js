@@ -53,10 +53,7 @@
 
 // === Custom Component Loader with Active Link Highlighter ===
 function loadComponent(id, file, callback) {
-    fetch(`/snippet/${file}`,
-         headers: {
-			'Access-Control-Allow-Origin': '*'
-			})
+    fetch(`./snippet/${file}`)
         .then(res => res.text())
         .then(data => {
             document.getElementById(id).innerHTML = data;
