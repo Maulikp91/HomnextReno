@@ -53,6 +53,7 @@
 
 // === Custom Component Loader with Active Link Highlighter ===
 function loadComponent(id, file, callback) {
+	var url = `./snippet/${file}`;
     fetch(`./snippet/${file}`)
         .then(res => res.text())
         .then(data => {
